@@ -1,0 +1,113 @@
+//Creo una clase que es prototipo de HTMLElemnt
+class gestionCuentas extends HTMLElement
+{   //Constructor de la clase gestionCuentas
+    constructor()
+    {   //Llama al super de la clase superior que es HTMLElemnt
+        super();
+        //Esta línea de código lo que me dice es que tengo mi webComponent "customizado", no va a ser modificado por ningún tipo de archivo css conectado al dom en este caso del index.html. Es decir el estilo va a ser independiente del estilo que tenga el documento HTML.
+
+        //mode: 'open' significa que que puedo acceder al contenido del shadow Dom desde usando la propiedad shadowsRoot
+        this.attachShadow({mode:'open'});
+    
+        //Con this.shadowRoot.innerHTML creo el contenido del shadow dom, el shadow dom puede contener elementos HTML o CSS. El shadow dom es un mapeo de elementos html que se esconden del documento html donde se usan los web-componentes para que no puedan ser afectados por el DOM de este.
+        this.shadowRoot.innerHTML = `
+                <style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+                    th, td {
+                        border: 1px solid black;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                    button {
+                        margin: 5px;
+                    }
+                </style>
+                <h1>Gestión de cuentas</h1>
+                <div>
+                    <button id="listar">Listar</button>
+                    <button id="crear">Crear</button>
+                    <button id="editar">Editar</button>
+                    <button id="borrar">Eliminar</button>
+                </div>
+                <h2>Listado de usuarios</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Saldo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list">
+                        <!-- Aca agrego las filas que voy crear dinámicamente -->
+                    </tbody>
+                </table>
+            `;
+            //Creo el método inicializar de la clase 
+            this.inicializar();
+    }
+    
+    //Defino el método inicializar de la clase gestionCuentas
+    inicializar()
+    {//Creo las variables de la clase que van a estar asociadas con los elementos del formulario que reciba los datos que ingrese el usuario en el shadow DOM de mi webcomponent.
+            this.listButton = this.shadowRoot.getElementById('listar');
+            this.createButton = this.shadowRoot.getElementById('crear');
+            this.editButton = this.shadowRoot.getElementById('editar');
+            this.deleteButton = this.shadowRoot.getElementById('borrar');
+            this.userList = this.shadowRoot.getElementById('lista-usuarios')
+
+            //Asocio los eventos a los botones. O sea, en estas sentencias de código asocio los botones mediante un método que "escucha" las acciones de los usuarios y cuando estos hagan click en el boton, el evento del click este asociado con la variable listButton de esta clase. Además lós métodos listarCuenta, crearCuenta, editarCuenta, y borrarCuenta; son los métodos de la clase gestionCuentas, con su propia lógica, que me van a permitir listar, crear, editar y borrar cuentas de usuario.
+            this.listButton.addEventListener('click',this.listarCuenta.bind(this));
+            this.createButton.addEventListener('click',this.crearCuenta.bind(this));
+            this.editButton.addEventListener('click',this.editarCuenta.bind(this));
+            this.deleteButton.addEventListener('click',this.borrarCuenta.bind(this));
+        
+    }
+    //La API Fetch es una interfaz de JavaScript que permite realizar solicitudes HTTP desde el navegador web hacia servidores. En este caso estoy usando el método fetch. En resumen es un mecanismo que sirve para hacer peticiones http
+    async recuperarCuentasJson()
+    {   //Guardo en una constante la resolución de la promesa que devuelve fetch. await se utiliza para esperar a que una promesa se resuelva. O sea lo que digo es, espera hasta que se resuelva la promesa de traer los datos que estan en el archivo cuentas.json- y guarda el resultado de esa promesa en la constante respuesta. 
+        const respuesta = await fetch('cuentas.json');
+        //Devuelvo la variable respuesta que usa el método json()
+        return respuesta.json();
+    }
+
+    //Creo el método asíncrono para listar las cuentas en el view del HTML
+    async listarCuentas()//Lógica de la función que lista las cuentas de usuario
+    {   //Guardo en la constante cuentas la resolución de la promesa.
+        const cuentas = await this.listarCuentas();
+        //Asigno un string vacio al objeto listar cuenta
+        this.listarCuenta.innerHTML= '';
+
+        //Uso un foreach para recorrer cada cuenta que esta en el json y poder obtener esos datos
+        cuentas.forEach(cuentas => 
+        {//Guardo en la constante fila los elementos que esten en la filas 
+            const fila = document.createElement('tr');
+            row.innerHTML = `
+                <td>${cuentas.id}</td>
+                <td>${cuentas.username}</td>
+                <td>${cuentas.saldo}</td>
+            `;
+            
+            this.userList.appendChild(row);
+        });
+
+
+    }
+
+
+
+
+
+
+
+
+
+}
+//Defino mi etiqueta personalizada del tipo HTML como webComponent. El primer parámetro es el nombre del webComponent y el segundo es la clase de la que deriva.
+window.customElements.define("gestion-cuentas",gestionCuentas);

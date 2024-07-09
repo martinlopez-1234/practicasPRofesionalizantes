@@ -1,0 +1,67 @@
+Actividad WebComponent ABM (CRUD)
+
+Versión 1.0
+Desarrollar un WebComponent que represente la interfaz de usuario adjuntada en la imagen.
+Aclaración: 25/4 (UN solo WebComponent con todo lo necesario dentro)
+
+La misma contiene los siguientes elementos importantes:
+
+    Botón Listar debe llenar la tabla vacía de la parte inferior a partir del conjunto de datos provisto en cuentas.json
+    Botón Crear debe solicitar datos mediante la función prompt() y muestre al finalizar el objeto vía consola de JS.
+    Botón Editar debe solicitar al usuario que ingrese el ID del objeto, pedir los nuevos datos para el objeto vía función prompt() y al terminar imprimir por consola de JS la versión "anterior" y la "actualizada" del mismo.
+    Botón Eliminar debe solicitar al usuario que ingrese el ID del objeto e imprimir por consola de JS el objeto a borrar.
+    Botón ...  únicamente es un selector pensado para futuras acciones (completarlo a gusto)
+    Tabla de datos (3 columnas: ID, Username, Saldo)
+
+
+Versión 2.0
+
+    Todas las acciones deben efectuar una modificación real del conjunto de datos y actualizar la visualización de la tabla luego de cada acción. Para ello, considere la estructura de datos como un JSON ya cargado en el programa.
+
+Versión 3.0
+
+    Efectúe las modificaciones necesarias a la versión 2.0 de modo tal que todas las acciones del sistema se resuelvan a través de código del servidor. Para ello, deberá construir una base de datos sencilla que almacene el dataset provisto y que al consultarlo, como así también todas las acciones pertinentes se efectúen mediante formato JSON.
+
+
+¿Como se crea un WebComponent?
+
+    Un Web Component es una excelente manera de encapsular funcionalidad y reutilizarla en tus aplicaciones web. Pasos básicos para crear uno:
+
+    1. Diseño la interacción con el usuario: Defino cómo quiero que mi componente se comunique con los usuarios. ¿Qué entradas (props) necesita? ¿Qué eventos debe manejar?
+    
+    2. Elijo un nombre para mi componente: Decido un nombre significativo para mi Web Component. Por ejemplo, “my-first-component”.
+    
+    3. Cargo el componente: En mi archivo HTML, importo el archivo JavaScript donde defino mi componente. Puedo hacerlo con una etiqueta <script> o mediante módulos ES6, pero lo mejor es usando importandolo de un archivo diferente de HTML y no con código inscrustado en el HTML.
+    
+    4. Defino el API de mi componente: Creo una clase JavaScript que extienda HTMLElement. Aquí es donde defino la funcionalidad de mi componente. Por ejemplo:
+        
+        class MyFirstComponent extends HTMLElement {
+        
+          constructor() {
+        
+            super();
+        
+            // Define la lógica de mi componente aquí
+        
+          }
+        
+        }
+
+    5. Implemento el ciclo de vida del componente: Los métodos como connectedCallback() (cuando se agrega al DOM) y disconnectedCallback() (cuando se desconecta del DOM) son útiles para gestionar el ciclo de vida de mi componente.
+    
+    6. Registro mi componente: Utilizo customElements.define() para registrar mi componente personalizado. Por ejemplo:
+        
+        window.customElements.define('my-first-component', MyFirstComponent);
+
+    7. Utilizo mi componente en el HTML: Ahora puedes usar mi componente como cualquier otro elemento HTML:
+        
+        <my-first-component></my-first-component>
+
+
+    8. Estilizo mi componente: Aplica estilos CSS a mi componente utilizando Shadow DOM para evitar colisiones con otros estilos.
+
+    9.Comunico mi componente con otros elementos: Puedo usar atributos o eventos para que mi componente interactúe con otros elementos en la página.
+    
+    10. Probar mi componente: Verifico que funcione correctamente en diferentes situaciones y navegadores.
+    
+    11. Documenta mi componente: Proporciono una descripción clara y ejemplos de uso para que otros desarrolladores puedan entender y utilizar tu Web Component.
